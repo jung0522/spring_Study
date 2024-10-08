@@ -17,3 +17,6 @@ doc/*.txt
 
 # ignore all .pdf files in the doc/ directory
 *.pdf
+
+# ignore all files in the h2-2019-10-14/ directory
+h2-2019-10-14/
