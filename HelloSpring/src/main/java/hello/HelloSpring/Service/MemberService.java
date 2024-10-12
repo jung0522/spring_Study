@@ -23,6 +23,7 @@ public class MemberService {
      */
     public Long join(Member member) {
         // 이미 회원이 존재하는 경우
+        long start = System.currentTimeMillis();
 
 
         ValidateDuplicateMember(member);
@@ -47,6 +48,6 @@ public class MemberService {
      * 전체 회원 조회
      */
     public Optional<Member> findOne(Long memberId) {
-       return memberrepository.findById(memberId);
+        return memberrepository.findById(memberId);
     }
 }

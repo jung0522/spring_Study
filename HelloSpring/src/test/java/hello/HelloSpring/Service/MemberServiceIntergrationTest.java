@@ -39,7 +39,7 @@ void join() {
         // 테스트에 사용하는 변수, 입력 값 등을 정의하거나, Mock 객체를
         // 정의하는 구문
         Member member = new Member();
-        member.setName("정준영1");
+        member.setName("정준영2");
 
 
         //when : 실제로 액션을 하는 테스트를 실행하는 과정

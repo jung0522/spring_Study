@@ -17,6 +17,8 @@ public class MemberController {
         @Autowired
         public MemberController(MemberService memberService) {
            this.memberService = memberService;
+//            CGLIB는 바이트코드 조작 라이브러리,  CGLIB는 클래스를 상속하여 프록시를 생성
+           System.out.println("memberService" + memberService.getClass());
         }
 
     // 2. 필드 주입

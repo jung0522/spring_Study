@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class memoryMemberRepositoryTest {
 
-     memberRepository repository =  new memoryMemberRepository();
+     memoryMemberRepository repository =  new memoryMemberRepository();
 
      @AfterEach
      public void AfterEach() {

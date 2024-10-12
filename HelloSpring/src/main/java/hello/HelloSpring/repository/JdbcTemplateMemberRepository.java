@@ -23,7 +23,7 @@ public class JdbcTemplateMemberRepository implements memberRepository {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Override
+
     public void clearStore() {
 
     }

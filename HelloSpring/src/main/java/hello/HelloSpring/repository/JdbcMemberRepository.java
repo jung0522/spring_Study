@@ -17,7 +17,7 @@ public class JdbcMemberRepository implements memberRepository {
         this.dataSource = dataSource;
     }
 
-    @Override
+
     public void clearStore() {
 
     }
@@ -130,10 +130,10 @@ public class JdbcMemberRepository implements memberRepository {
             return members;
         } catch (Exception e) {
             throw new IllegalStateException(e);
-         } finally {
+        } finally {
             close(conn, pstmt, rs);
-         }
         }
+    }
 
 
     private Connection getConnection() {
@@ -170,4 +170,3 @@ public class JdbcMemberRepository implements memberRepository {
 
 
 }
-

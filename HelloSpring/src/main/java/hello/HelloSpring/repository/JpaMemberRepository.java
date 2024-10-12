@@ -13,7 +13,7 @@ public class JpaMemberRepository implements memberRepository {
         this.em = em;
     }
 
-    @Override
+
     public void clearStore() {
 
     }
