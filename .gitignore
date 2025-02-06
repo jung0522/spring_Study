@@ -1,8 +1,11 @@
 
 # : comments
 
-# no .a files
-*.a
+# no .docx files
+*.docx
+
+# no .pdf files
+*.pdf
 
 # but do track lib.a, even though you're ignoring .a files above
 !lib.a
