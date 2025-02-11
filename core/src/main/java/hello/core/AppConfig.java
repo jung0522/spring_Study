@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
-    // 인터페이스 메서드로 구체 클래스 생성자로 구현 객체 생성 메서드 호출
+    // 인터페이스 메서드로 구체 클래스 생성자로 구현 객체 생성 메서드 호출, 팩토리 메서드 패턴
     @Bean
     public MemberService memberService() {
 

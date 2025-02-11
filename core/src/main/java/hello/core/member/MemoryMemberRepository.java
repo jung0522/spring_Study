@@ -1,11 +1,14 @@
 package hello.core.member;
 
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
 // 인터페이스(MemberRepository)랑 구현체(MemoryMemberRepository)를
 // 다른 패키지에 두는 것이 좋지만 위는 간단하게 하기 위해 같은 패키지
+@Component
 public class MemoryMemberRepository implements MemberRepository {
 
     // 실무에선 동시성 문제 때문에 ConcurrentHashMap
