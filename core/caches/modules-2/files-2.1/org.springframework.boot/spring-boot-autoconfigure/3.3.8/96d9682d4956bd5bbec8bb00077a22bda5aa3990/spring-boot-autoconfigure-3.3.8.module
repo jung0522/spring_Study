@@ -1,0 +1,118 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.springframework.boot",
+    "module": "spring-boot-autoconfigure",
+    "version": "3.3.8",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.12"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot",
+          "version": {
+            "requires": "3.3.8"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "spring-boot-autoconfigure-3.3.8.jar",
+          "url": "spring-boot-autoconfigure-3.3.8.jar",
+          "size": 1968129,
+          "sha512": "6d9a7cf65e2efcdadb8536c7b05d25745901e8d81d54f3ba665be1e0a815401e654ada371ef97028b8e3e44c257d5ad84b8d093cc790fdf244c0f0554188b188",
+          "sha256": "31829c970bcf671e797e2f34995bd4d113668c42c3ecebee37c79898be7e5df0",
+          "sha1": "0a4c92ce7a7e924aad5299dd2a87d3c7d6681d3d",
+          "md5": "d7165da8d158fdf293602645149b85d0"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot",
+          "version": {
+            "requires": "3.3.8"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "spring-boot-autoconfigure-3.3.8.jar",
+          "url": "spring-boot-autoconfigure-3.3.8.jar",
+          "size": 1968129,
+          "sha512": "6d9a7cf65e2efcdadb8536c7b05d25745901e8d81d54f3ba665be1e0a815401e654ada371ef97028b8e3e44c257d5ad84b8d093cc790fdf244c0f0554188b188",
+          "sha256": "31829c970bcf671e797e2f34995bd4d113668c42c3ecebee37c79898be7e5df0",
+          "sha1": "0a4c92ce7a7e924aad5299dd2a87d3c7d6681d3d",
+          "md5": "d7165da8d158fdf293602645149b85d0"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "spring-boot-autoconfigure-3.3.8-javadoc.jar",
+          "url": "spring-boot-autoconfigure-3.3.8-javadoc.jar",
+          "size": 3051341,
+          "sha512": "12443405f38226b1dbfa5d6bfbf18ca5784a7d2eaf2a5b25a7e2c3cabc3a9977c7826a496ec9c63194cb053b3fa56e749a51faeb3e1350d8043b4c6b426bca3d",
+          "sha256": "0dfd2a61e63b90afb74c7697db2b4f3700483449e25726f6290c229692372e0f",
+          "sha1": "d5e07dcc5bf4205f77f5e10f86b65faf6ac3cf00",
+          "md5": "cbaeacc09bff88228264daa882c5b4be"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "spring-boot-autoconfigure-3.3.8-sources.jar",
+          "url": "spring-boot-autoconfigure-3.3.8-sources.jar",
+          "size": 1133676,
+          "sha512": "bcbe8071bcabb03fad6670ef9abcce5ce097eaedc6d38d47542618f3307e6c3b632664225e65e6e79ab165c3d52075abf492225120354d1cf96f31c0949197c4",
+          "sha256": "b3698b575a64e4d3cbf2cd9994b237ede18cedeb78c5cd8ab9d104bbd5b2be8a",
+          "sha1": "c57857b3bed6cd71a69109e1b264300d7738a691",
+          "md5": "a3cb32f0ff6ff0515e8afda044e10c59"
+        }
+      ]
+    }
+  ]
+}
