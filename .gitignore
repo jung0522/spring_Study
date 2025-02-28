@@ -25,4 +25,7 @@ doc/*.txt
 # ignore all files in the h2-2019-10-14/ directory
 h2-2019-10-14/
 
-core/caches/*.jar
+# Gradle cache & build directories
+.gradle/
+core/caches/
+build/
