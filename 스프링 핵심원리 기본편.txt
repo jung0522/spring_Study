@@ -1,0 +1,763 @@
+스프링 핵심원리 기본편
+
+ORM (Object-Relational Mapping)
+정의: 객체 지향 프로그래밍 언어의 객체와 관계형 데이터베이스의 테이블 간의 매핑을 자동으로 처리하는 기술.
+장점: SQL을 직접 작성하지 않아도 객체의 메서드를 호출하여 데이터를 저장, 조회, 갱신, 삭제할 수 있음.
+대표 도구: JPA, Hibernate, MyBatis 등.
+
+
+JPA (Java Persistence API)
+정의: 자바 표준 ORM 기술. Java EE(현재는 Jakarta EE)에서 제공하는 ORM을 위한 API.
+역할: 객체를 데이터베이스 테이블에 매핑하는 표준 인터페이스를 제공. 실제 작업은 Hibernate와 같은 구현체가 수행.
+주요 특징:
+Entity: 데이터베이스 테이블에 매핑되는 클래스.
+Persistence Context: 엔티티 객체를 관리하는 컨텍스트(1차 캐시).
+JPQL: 객체를 대상으로 쿼리를 실행하는 JPA의 SQL과 비슷한 언어.
+JPA의 주요 어노테이션
+@Entity
+클래스가 데이터베이스 테이블과 매핑됨을 나타냄.
+@Id
+기본 키를 나타냄.
+@GeneratedValue
+기본 키 생성 전략 설정.
+@Column
+테이블의 컬럼과 매핑.
+@OneToMany, @ManyToOne, @OneToOne, @ManyToMany
+엔티티 간의 연관 관계를 정의.
+
+Hibernate
+JPA의 대표적인 구현체로, JPA 기능 외에도 고급 기능을 제공.
+
+Spring Data JPA
+Spring이 JPA를 더 쉽게 사용할 수 있도록 지원하는 라이브러리.
+데이터 접근 레이어를 간단히 생성할 수 있음.
+주요 기능:
+JpaRepository 인터페이스로 CRUD 기능 제공.
+메서드 이름으로 쿼리를 생성하는 기능(findByName, findByAgeGreaterThan 등).
+
+XML(Extensible Markup Language)은 데이터를 저장하고 전송하기 위한 마크업 언어
+태그기반, 트리 구조
+JSON(JavaScript Object Notation) 은 데이터를 저장하고 전송하기 위한 키-값 쌍 구조(객체 및 배열)
+XML
+<book>
+    <title>Effective Java</title>
+    <author>Joshua Bloch</author>
+    <year>2018</year>
+</book>
+
+
+JSON
+{
+    "book": {
+        "title": "Effective Java",
+        "author": "Joshua Bloch",
+        "year": 2018
+    }
+}
+
+** 스프링 부트 스타터 사이트
+
+Maven과 Gradle은 모두 Java 기반 프로젝트의 빌드와 의존성 관리를 위한 도구
+Maven : XML 기반 ex) pom.xml 
+Gradle : Groovy 또는 Kotlin DSL 기반 ex) build.gradle
+DSL(Domain-Specific Language)은 특정 도메인이나 문제 영역에 최적화된 전용 언어
+
+2. 플러그인 적용
+Groovy DSL:
+
+groovy
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.0'
+}
+Kotlin DSL:
+
+kotlin
+
+plugins {
+    java
+    id("org.springframework.boot") version "3.0.0"
+}
+
+Gradle 쓰셈.
+
+
+SNAPSHOT, M : 정식으로 릴리즈 되지 않은 버전
+
+Group: 프로젝트 조직 or 소속
+Ex) com.example, org.springframework, io.github.jung0522	
+
+Artifact : 프로젝트 이름
+Ex) spring-boot-starter, my-awesome-app, cart-api
+예: .jar, .war)의 이름으로 사용.
+
+Intellj -> file -> setting -> keymap(단축키 찾을 수 있음)
+
+
+
+
+enum(열거형)은 상수 집합을 정의하는 특수한 클래스
+
+ex)
+public enum grade {
+    BASIC,
+    VIP
+}
+
+public class Grade {
+    public static final String BASIC = "BASIC";
+    public static final String VIP = "VIP";
+}
+
+Intelllj 창에서 
+Ex) hello 패키지 클릭 후 왼쪽 3동그라미 클릭 -> Appearance -> Compact Middel Packages
+
+-	인텔리제이 단축키
+메서드 클릭 후 crtl + shift + t -> new test 자동 생성
+
+-	스프링 부트 용어 정리
+프레임워크 vs 라이브러리 
+프레임워크: 내가 작성한 코드를 대신 제어하고, 대신 실행해주면 프레임워크
+Ex) Junit 
+Ex) 테스트 시 @BeforeEach를 알아서 먼저 실행하고 테스트 코드를 실행하는 것처럼
+제어권이 프레임워크에게 있다
+라이브러리: 반대로, 내가 작성한 코드를 직접 실행한다면 라이브러리
+
+
+IoC(Inversion of Control) 프로그램의 제어권을 개발자가 아니라 프레임워크나 컨테이너가 관리하는 것
+
+의존성 주입: 객체가 필요한 의존성을 외부에서 주입받는 것
+private final MemberRepository memberRepository = new MemoryMemberRepository();
+는 구체클래스에 직접적으로 의존해 유지 보수 어려움
+// 의존하는 인터페이스 선언만 해주고
+    private final MemberRepository memberRepository;
+
+    // 외부에서 생성자 주입을 통해 의존성 주입
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+DI 컨테이너: AppConfig처럼 객의 생명 주기와 의존성 관리를 자동으로 해주는 거
+
+이제 스프링으로 바꿔보기
+
+@Configuration: 스프링 설정 어노테이션
+@Bean: 스프링 컨테이너에 등록
+
+ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+ApplicationContext : Bean 관리 의존성 주입해주는 인터페이스 = 스프링 컨테이너
+AnnotationConfigApplicationContext: Java 기반의 @Configuration 설정 클래스를 사용
+ApplicationContext(인터페이스)를 구현한 구체 클래스
+(AppConfig.class): Configuartion 클래스
+
+MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
+
+getBean(“등록된 메서드 이름의 Bean”, 반환 타입(인터페이스.class)
+
+-	인텔리제이 단축키
+Crtl + N : 패키지, 클래스 검색
+
+BeanDefinition beanDefinition = ac.getBeanDefinitionNames(): 스프링에 등록된 모든 빈 이름을 조회
+Ex)
+org.springframework.context.annotation.internalConfigurationAnnotationProcessor
+memberRepository
+
+BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName); 특정 빈의 메타데이터를 조회할 때 사용
+
+Object bean = ac.getBean(beanDefinitionName); 빈 이름으로 빈 객체(인스턴스)를 조회
+Ex)
+org.springframework.context.annotation.ConfigurationClassPostProcessor@636e8cc
+hello.core.member.MemberServiceImpl@5b057c8c
+//Role ROLE_APPLICATION: 직접 등록한 애플리케이션 빈
+//Role ROLE_INFRASTRUCTURE: 스프링이 내부에서 사용하는 빈
+
+-인텔리 제이 단축키
+Tab : 들여쓰기
+Shift + tab : 내여쓰기
+
+TDD (Test-Driven Development, 테스트 주도 개발)
+1.	실패하는 테스트(RED)를 먼저 작성한다.
+-	구현되지 않은 기능을 테스트하는 코드 작성
+2.	테스트를 통과(GREEN)할 최소한의 코드를 작성한다.
+-	기능이 동작하도록 최소한으로 코드 구현
+3.	코드를 리팩토링(Refactor)하여 개선한다.
+-	중복 제거, 코드 구조 개선
+
+AOP(Aspect Of Programming): 공통 기능을 분리하여 모듈화
+
+내부 클래스는 기본적으로 static으로 선언하는 것이 좋다.
+외부 클래스의 멤버를 참조할 필요가 없다면 static을 사용하여 불필요한 참조를 줄이고 메모리 누수를 방지해야 한다.
+하지만 외부 클래스의 인스턴스와 긴밀하게 연관된 경우에는 static을 사용하지 않는다.
+
+Xml 장점: 컴파일 없이 빈 설정 정보를 변경할 수 있음.
+
+Object bean = ac.getBean(beanDefinitionName);
+hello.core.member.MemberServiceImpl@14f5da2c 
+Map<String, DiscountPolicy> beans = ac.getBeansOfType(DiscountPolicy.class);
+fixDiscountPolicy : hello.core.discount.FixDiscountPolicy@2484f433
+BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);
+Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=appConfig; factoryMethodName=memberRepository; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in hello.core.AppConfig
+
+싱글톤 컨테이너
+Why? 고객이 요청할 때마다 객체 생성 너무 많음 !!
+
+싱글톤 패턴: 클래스의 인스턴스가 딱 1개만 생성되는 것을 보장하는 디자인 패턴
+그래서 객체 인스턴스를 2개 이상 생성하지 못하도록 막아야 한다
+
+/1. static 영역에 객체를 딱 1개만 생성해둔다.
+private static final SingletonService instance = new SingletonService();
+
+//2. public으로 열어서 객체 인스턴스가 필요하면 이 static 메서드를 통해서만 조회하도록 허용한다.
+public static SingletonService getInstance() {
+    return instance;
+}
+
+//3. 생성자를 private으로 선언해서 외부에서 new 키워드를 사용한 객체 생성을 못하게 막는다
+private SingletonService() {
+
+}
+
+스프링 컨테이너는 싱글턴 패턴을 적용하지 않아도, 객체 인스턴스를 싱글톤으로 관리한다
+스프링 컨테이너 덕분에 고객의 요청이 올 때 마다 객체를 생성하는 것이 아니라, 이미 만들어진 객체를 공유해서 효율적으로 재사용할 수 있다
+	스프링 컨테이너 자동적으로 싱글톤
+(but, 요청할 때마다 새로운 객체 반환도 가능)
+
+싱글톤 방식의 주의점
+무상태(stateless)로 설계해야 한다!
+필드 대신에 자바에서 공유되지 않는, 지역변수, 파라미터, ThreadLocal 등을 사용해야 한다
+
+
+
+
+
+Spring은 기본적으로 싱글 컨테이너 
+확인해보면 memberRepository 인스턴스는 모두 같은 인스턴스가 공유되어 사용된다
+MemberService ->  new MemoryMemberRepository
+OrderService ->  new MemoryMemberRepository
+둘 다 같음!
+
+FilterType 옵션  
+FilterType은 5가지 옵션이 있다. 
+ANNOTATION: 기본값, 애노테이션을 인식해서 동작한다. 
+ex) ` org.example.SomeAnnotation
+type = FilterType.ANNOTATION
+생략 가능
+ASSIGNABLE_TYPE: 지정한 타입과 자식 타입을 인식해서 동작한다. 
+ex) ` org.example.SomeClass
+ASPECTJ: AspectJ 패턴 사용 
+ex) ` org.example..*Service+
+REGEX: 정규 표현식 
+ex) ` org\.example\.Default.*
+CUSTOM: ` TypeFilter ` ` 이라는 인터페이스를 구현해서 처리 
+ex) ` org.example.MyTypeFilter `
+
+자동 빈 등록 vs 자동 빈 등록 컴포넌트 스캔에 의해 자동으로 스프링 빈이 등록되는데, 그 이름이 같은 경우 스프링은 오류를 발생시킨다. ` ConflictingBeanDefinitionException 예외 발생
+
+수동 빈 등록 vs 자동 빈 등록 만약 수동 빈 등록과 자동 빈 등록에서 빈 이름이 충돌되면 어떻게 될까?
+
+이 경우 수동 빈 등록이 우선권을 가진다.
+(수동 빈이 자동 빈을 오버라이딩 해버린다.)
+
+그래서 최근 스프링 부트에서는 수동 빈 등록과 자동 빈 등록이 충돌나면 오류가 발생하도록 기본 값을 바꾸었다. 수동 빈 등록, 자동 빈 등록 오류시 스프링 부트 에러 ** ** Consider renaming one of the beans or enabling overriding by setting ` spring.main.allow-bean-definition-overriding=true
+
+오버라이딩 허용시키려면
+application.properties 파일
+소스코드
+spring.main.allow-bean-definition-overriding=true
+
+7. 의존 관계 주입
+
+생성자 주입 
+수정자 주입(setter 주입) 
+필드 주입 
+일반 메서드 주입
+
+1.	생성자 주입
+// 생성자 주입
+@Autowired // ac.getBean(MemberRepository.class)과 같은 역할
+public MemberServiceImpl(MemberRepository memberRepository) {
+    this.memberRepository = memberRepository;
+}
+
+@Override
+public void join(Member member) {
+    memberRepository.save(member);
+
+}
+특징 
+생성자 호출시점에 딱 1번만 호출되는 것이 보장된다. 
+** 불변, 필수** 의존관계에 사용
+public Long getId() {
+    return id;
+}
+
+public void setId(Long id) {
+    this.id = id;
+}
+위처럼 생성자 호출 이후 getter, setter x 
+
+중요! 생성자가 딱 1개만 있으면 @Autowired를 생략해도 자동 주입 된다. 
+** ** ```java 물론 스프링 빈에만 해당한다.
+@RequiredArgsConstructor: Lombok에서 제공하는 애노테이션으로, final 또는 @NonNull이 붙은 필드들만을 인자로 받는 생성자를 자동으로 생성해 줍니다.
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class MyService {
+
+    private final MyRepository myRepository; // 자동으로 생성자의 인자로 포함됨
+    private final MyOtherDependency myOtherDependency; // 자동으로 포함됨
+    private String someValue; // final이 아니므로 생성자에 포함되지 않음
+
+    public void doSomething() {
+        myRepository.save();
+    }
+}
+순환 참조 문제를 컴파일 시점에서 감지 가능 → 순환 참조가 있으면 애플리케이션이 실행되지 않음
+2.	Setter 주입
+// 2. setter 주입
+@Autowired
+public void setMemberRepository(MemberRepository memberRepository) {
+    this.memberRepository = memberRepository;
+}
+
+수정자 주입(setter 주입) ```
+java setter라 불리는 필드의 값을 변경하는 수정자 메서드를 통해서 의존관계를 주입하는 방법
+@Autowired
+set필드명 메서드 (자바빈 프로퍼티 규약)
+
+특징 
+선택, 변경 ** ** 가능성이 있는 의존관계에 사용 -> final x
+자바빈 프로퍼티 규약의 수정자 메서드 방식을 사용하는 방법이다
+
+1.	생성자 2. Setter 순서로 주입됨
+
+주입할 대상이 없으면 오류가 발생한다. 주입할 대상이 없어도 동작하게 하려면
+@Autowired(required = false) ` ` 로 지정하면 된다
+
+스프링 빈에 자동 등록 안 하려할 때 사용
+
+3.  필드 주입
+@Autowired MemberRepository memberRepository;
+
+@Autowired 필드;
+특징
+Private 필드에 @Autowired로 자동 등록을 해버려서
+따로 테스트 클래스를 만들어서 불러올 수가 없다. -> 외부에서 변경 x
+final 사용 x
+
+4. 일반 메서드
+- 거의 사용 안 됨
+
+-	인텔리제이 단축키: crtl + alt + s : 세팅
+
+주입할 스프링 빈 없을 때 ex) Member처럼 의존 관계 없을 때 (주입할 빈이 아닐 때)
+@Autowired 기본값 true라 주입할 대상 없으면 에러
+해결 방법
+1.	@Autowired(required=false) : 기본값 false로
+2.	@Nullable Member member : @Nullable로 null로 호출
+3.	Optional<Member> member
+
+생성자 주입 사용해라!!
+1.	불변: 프로그램 시작부터 끝날 때까지 의존관계는 변하면 안 됨
+2.	순환 참조 문제를 컴파일 발견 가능
+3.	생성자 주입을 사용하면 다음처럼 주입 데이터를 누락 했을 때 컴파일 오류 발생, 그리고 IDE에서 바로 어떤 값을 필수로 주입해야 하는지 알 수 있다. 
+
+
+
+그런데 생성자도 만들어야 하고, 주입 받은 값을 대입하는 코드도 만들어야 하고… 필드 주입처럼 좀 편리하게 사용하는 방법은 없을까?
+
+Lombok 등장
+Start.spring.io 사이트에서 dependency 설정 가능
+
+1.	Plugins에서 Lombok 설치 (재시작)
+2.	Preferences Annotation Processors 검색 Enable annotation processing 체크 (재시작)
+3.	의존 관계 설정 x -> build.gradle 직접 추가 및 새로고침
+@RequiredArgsConstructor 붙여주면 생성자 코드 작성 필요 x
+	Why? Final 붙은 필드 값을 기준으로 자동으로 생성자 만들어줌
+
+@Component
+@RequiredArgsConstructor
+public class OrderServiceImpl implements OrderService {
+
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
+//    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+
+    // OrderServiceImpl도 생성자 주입 !
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
+
+    @Override
+    public Order createOrder(Long memberId, String itemName, int itemPrice) {
+     Member member = memberRepository.findById(memberId);
+     int discountPrice = discountPolicy.discount(member, itemPrice);
+
+     return new Order(memberId, itemName, itemPrice, discountPrice);
+    }
+}
+
+@Getter, @Setter, @ToString도 지원해줌
+
+
+기존 코드
+@Autowired private DiscountPolicy discountPolicy
+
+필드 명을 빈 이름으로 변경 
+@Autowired private DiscountPolicy rateDiscountPolicy
+
+
+@Qualifier
+@Primary
+
+` @Qualifier ` 가 우선권이 높다
+
+어노테이션 만들기
+어노테이션 만들고
+Crtl + B로 기능 찾고 복붙해서 사용
+@Qualifier("MainDiscountPolicy")
+public @interface MainDiscountPolicy {
+}
+
+애노테이션에는 상속이라는 개념이 없다
+
+static class DiscountService {
+    private final Map<String, DiscountPolicy> policyMap;
+    private final List<DiscountPolicy> policies;
+
+    public DiscountService(Map<String, DiscountPolicy> policyMap, List<DiscountPolicy> policies) {
+        this.policyMap = policyMap;
+        this.policies = policies;
+        System.out.println("policyMap = " + policyMap);
+        System.out.println("policies = " + policies);
+    }
+
+Map 형태로 
+Private final Map<String, DiscountPolicy> policyMap;
+생성자 선언 시 매개변수로
+Public DicountService(Map<String, DiscountPolicy> policyMap
+
+자동 vs 수동
+위처럼 비즈니스 로직인데도 Map을 사용해 조회한 빈이 모두 필요할 때,
+기술 지원 로직 or Aop를 처리할 때
+Ex) DB 연결, 공통 로그 처리
+
+나머지 웬만해선 자동( MVC )
+
+순서: 객체 생성 > 의존관계 주입 
+단, 생성자 주입은 예외!!! 
+생성자 주입은 객체 생성시 바로 의존관계 주입도 일어남
+
+객체의 생성과 초기화를 분리하자 !!
+
+public class DatabaseConnection {
+    private String url;
+    private String username;
+    private String password;
+    private Connection connection;
+
+    // 생성자: 필수 정보만을 받아 객체 생성
+    public DatabaseConnection(String url, String username, String password) {
+        this.url = url;
+        this.username = username;
+        this.password = password;
+    }
+
+    // 초기화 메소드: 외부 커넥션을 연결하는 등의 무거운 작업을 수행
+    public void init() {
+        try {
+            // DB 연결 시도 (무거운 작업)
+            connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Database connection established.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    // 기타 메소드들
+}
+1.	인터페이스 이용
+InitializingBean = afterPropertiesSet() 메서드로 초기화를 지원한다.
+DisposableBean = destroy() 메서드로 초기화를 지원한다. 
+
+초기화, 소멸 인터페이스 단점 ** ** 
+이 인터페이스는 스프링 전용 인터페이스다. 
+해당 코드가 스프링 전용 인터페이스에 의존한다. 초기화, 소멸 메서드의 이름을 변경할 수 없다. 내가 코드를 고칠 수 없는 외부 라이브러리에 적용할 수 없다. 
+인터페이스를 사용하는 초기화, 종료 방법은 스프링 초창기에 나온 방법들이고, 지금은 다음의 더 나은 방법 들이 있어서 거의 사용하지 않는다.
+
+2.	설정 정보에 초기화 소멸 메서드 지정 
+
+메서드 이름을 자유롭게 줄 수 있다. 스프링 빈이 스프링 코드에 의존하지 않는다. 
+
+코드가 아니라 설정 정보를 사용하기 때문에 코드를 고칠 수 없는 외부 라이브러리에도 초기화, 종료 메서드를 적용할 수 있다.
+
+3.	어노테이션 활용 (이거 써라)
+@PostConstruct : == init, 객체가 생성되고 의존성 주입이 완료된 후에 초기화 작업을 실행할 수 있도록, 생성자 호출 > @PostConstruct
+@PreDestroy : == close, ac.disconnect(); 객체가 소멸되기 전에 호출되는 자동으로 호출
+
+컴포넌트 스캔과 잘 어울린다
+정리
+코드를 고칠 수 없는 외부 라이브러리를 초기화, 종료해야 하면 @Bean의 initMethod, destroyMethod를 사용하자.
+생성자 주입은 객체 생성과 동시에 생성자 매개변수로 의존관계 주입이 일어남
+Setter 주입과 필드 주입은 객체 생성 후에 의존관계 주입이 일어나므로
+객체 초기화 시(DB 연결) 자동으로 호출되는 메서드 @PostConstruct, @PreDestroy 애노테이션을 사용하자 
+ac.close()를 호출하는 이유는 Spring ApplicationContext를 종료하고 관련된 리소스를 해제하기 위해서 
+
+의존관계 주입: 객체가 자신이 필요한 의존 객체를 스스로 생성하지 않고, 외부에서 주입받는 방식
+
+빈 스코프
+
+싱글톤 : 기본 스코프, 스프링 컨테이너의 시작과 종료까지 유지되는 가장 넓은 범위의 스코프
+프로토타입 : 스프링 컨테이너는 프로토타입 빈의 생성과 의존관계 주입까지만 관여하고, 더는 관리하지 않는 매우 짧은 범위의 스코프 (스프링 컨테이너는 프로토타입 빈 생성, 의존관계 주입, 초기화까지만 == @PreDestroy 호출 x, 호출하려면 코드를 직접 작성해서 호출)
+
+여기서 중요한 점이 있는데, clientBean이 내부에 가지고 있는 프로토타입 빈은 이미 과거에 주입이 끝난 빈이 ** 다. 주입 시점에 스프링 컨테이너에 요청해서 프로토타입 빈이 새로 생성이 된 것이지, 사용 할 때마다 새로 생성되 는 것이 아니다!
+
+싱글톤 빈 내부의 프로토타입 빈을 여러 부를 경우 생성 시점에 주입이 한 번 일어나기 때문에 같은 프로토타입의 빈이 된다.
+
+싱글톤 빈과 프로토타입 빈을 함께 사용할 때, 어떻게 하면 사용할 때 마다 항상 새로운 프로토타입 빈을 생성할 수 있을까?
+1.	싱글톤 빈이 프로토타입을 사용할 때 마다 스프링 컨테이너에 새로 요청하는 것
+@Autowired 
+private ApplicationContext ac; 
+public int logic() { 
+PrototypeBean prototypeBean = ac.getBean(PrototypeBean.class); 
+prototypeBean.addCount(); 
+int count = prototypeBean.getCount(); 
+return count; 
+}
+
+Dependency Lookup (DL) 의존관계 조회(탐색): 의존관계를 외부에서 주입(DI) 받는게 아니라 이렇게 직접 필요한 의존관계를 찾는 것
+
+ependency Lookup (DL): 객체가 직접 의존성을 찾는 방식 (getBean())
+Dependency Injection (DI): 외부에서 자동으로 주입하는 방식 (@Autowired)
+ObjectProvider의 getObject 메서드 사용
+private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+
+@Autowired
+public ClientBean(ObjectProvider<PrototypeBean> prototypeBeanProvider) {
+    this.prototypeBeanProvider = prototypeBeanProvider;
+}
+
+public int logic() {
+    PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
+    prototypeBean.addCount();
+    return prototypeBean.getCount();
+}
+
+` ObjectFactory가 있었는데 이 인터페이스를 구현한 ObjectProvider getObject 말고도 다른 기능도 존재한다
+
+Mock(목) 객체는 테스트를 위해 실제 객체를 흉내 내는 가짜 객체
+
+-	Intellij 단축키
+Shift + f10 실행, crtl + f2 종료
+
+@RequestMapping :모든 HTTP 메서드 (기본)GET, POST, PUT, DELETE 등을 명시적으로 지정할 수 있음
+@GetMapping:GET@RequestMapping(method = RequestMethod.GET)의 단축 버전
+@PostMappingPOST@RequestMapping(method = RequestMethod.POST)의 단축 버전
+
+@Scope(value = "request")
+@Scope(안에 2개이상 넣으면 value 생략 불가..)
+
+적용 대상이 인터페이스가 아닌 클래스면 적용 대상이 TARGET_CLASS 를 선택하고 아니면
+INTERFACES
+
+프록시는 클라이언트가 직접 서버에 접근하지 않고, 프록시를 통해 서버와 통신
+예제:
+회사에서 직원들이 YouTube에 접근하지 못하도록 프록시 서버에서 차단
+사용자는 VPN(가상 사설망)을 사용해 프록시를 우회하여 차단된 사이트에 접근
+
+단일 책임 원칙 (Single Responsibility Principle, SRP)
+ "클래스는 단 하나의 책임만 가져야 한다."
+즉, 하나의 클래스는 하나의 기능만 담당해야 하며, 변경의 이유는 하나여야 한다.
+
+OCP (Open-Closed Principle, 개방-폐쇄 원칙)
+"확장에는 열려 있고, 변경에는 닫혀 있어야 한다."
+즉, 기능을 추가할 때 기존 코드를 수정하지 않고 확장할 수 있도록 설계해야 한다.
+
+LSP (Liskov Substitution Principle, 리스코프 치환 원칙)
+"하위 타입은 상위 타입을 대체할 수 있어야 한다."
+즉, 부모 클래스를 사용하는 곳에서 자식 클래스를 넣어도 프로그램이 정상적으로 동작해야 한다.
+
+ISP (Interface Segregation Principle, 인터페이스 분리 원칙)
+"클라이언트는 자신이 사용하지 않는 인터페이스에 의존하면 안 된다."
+즉, 큰 인터페이스를 여러 개의 작은 인터페이스로 분리하여, 필요한 기능만 구현할 수 있도록 해야 한다.
+
+DIP (Dependency Inversion Principle, 의존성 역전 원칙)"고수준 모듈(비즈니스 로직)은 저수준 모듈(세부 구현)에 의존하면 안 된다. 둘 다 추상화에 의존해야 한다."
+즉, 구체적인 구현 클래스가 아닌 인터페이스나 추상 클래스에 의존하도록 설계해야 한다.
+
+Dto 사용하는 이유: Controller, Service, Repository 등 여러 레어어 간의 데이터가 이동해야 하므로 
+한 레이어의 코드 수정이 다른 레이어에 영향을 주지 않도록 하기 위해서
+
+-	인텔리제이 단축키
+단어 바꾸기 : crtl + r
+-	인텔리제이 단축키
+레이어 변경 : crtl + tab
+
+@Data: @Getter/@Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor 자동 생성
+
+@RequiredArgsConstructor: final이나 @NonNull이 붙은 필드만을 파라미터로 받는 생성자
+(service, repository, controller)
+
+@NoArgsConstructor: 파라미터가 없는 기본 생성자(no-args constructor)
+@AllArgsConstructor 모든 필드를 파라미터로 받는 생성자
+(entity, dto)
+
+
+MongoDB에서는 ID 타입을 String으로 사용하는 것이 일반적이에요. 이유는 MongoDB에서 기본적으로 _id 필드는 ObjectId 타입이며, 이게 내부적으로는 24자리 16진수 문자열로 구성되어 있기 때문입니다.
+
+spring.thymeleaf.cache=false
+기본적으로 Spring Boot에서는 Thymeleaf 템플릿을 캐싱(저장)한다.
+즉, HTML 파일을 수정해도 서버를 다시 시작하지 않으면 반영되지 않는다.
+개발 중 (개발 환경) → false
+운영 환경 (배포 환경) → true (기본값)
+
+@PathVariable: 
+@GetMapping("/posts/{id}")
+public Post getPostById(@PathVariable String id) {
+    return postService.getPost(id);
+}
+GET /posts/123
+
+@RequestParam
+@GetMapping("/posts/search")
+public List<Post> searchPosts(@RequestParam String keyword) {
+    return postService.search(keyword);
+}
+GET /posts/search?keyword=spring
+
+#셍략 가능
+#테이블 자동 생성 옵션 (none, update, create, create-drop 중 택)
+spring.jpa.hibernate.ddl-auto=update
+#SQL 쿼리 출력 여부
+spring.jpa.show-sql=true
+#MySQL 버전에 따라 설정 (MySQL 8 기준)
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+
+
+MongoDB 외래키
+@DBRef: 자동으로 참조할 엔티티의 id를 참조
+
+public interface PostRepository extends JpaRepository<엔티티, 엔티티 기본키 자료형(id 자료형)> {
+}
+
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+IDENTITY: DB의 AUTO_INCREMENT 기능 사용 (MySQL, PostgreSQL 등)
+AUTO: JPA가 DB에 따라 전략 자동 선택
+
+@Column(columnDefinition = "TEXT")
+코드는 데이터베이스에서 해당 필드가 TEXT 타입으로 생성되도록 한다.
+주로 게시판 본문, 리뷰 내용, 설명 텍스트처럼 긴 문자열을 저장할 때 사용한다.
+
+Mysql vs MongoDB
+@Entity 써줘야 함
+
+record
+record로 정의된 객체는 모든 필드가 final이고
+데이터를 전달하거나 읽기 전용으로 사용할 때 아주 적절함.
+Lombok이 필요 없으며, getter, toString, equals, hashCode 등 모두 자동 생성되오.
+불변 객체 -> setter x
+getTtitle() x, title() 
+getter() x, 엔티티 컬럼() 
+map 함수는 주로 스트림(Stream) API에서 사용되며, 각 요소를 특정 방식으로 변환(transform)할 때 사용된다. map은 입력 요소를 하나씩 받아서 다른 값으로 변환한 스트림을 생성한다.
+
+@EnableJpaAuditing : @CreatedDate, @LastModifiedDate
+
+@Column(unique = true)
+
+@ManyToOne(fetch = FetchType.LAZY)
+@Column(name = “user_id”)
+private User writer;
+
+fetch = FetchType.LAZY
+지연 로딩(LAZY Loading)을 의미합니다.
+해당 엔티티를 처음 조회할 때 연관된 User 객체를 바로 불러오지 않고, 
+실제로 사용할 때(fetch할 때) 쿼리를 실행하여 가져옵니다. -> 성능 최적화
+
+-	인텔리제이 단축키
+Ctrl + Shift + O : build.gradle 수정 반영
+JpaRepository<엔티티, 엔티티의 기본키 타입>
+spring.jpa.hibernate.ddl-auto=update
+테이블 수정 자동 업데이트
+spring.jackson.serialization.write-dates-as-timestamps=false
+시간 숫자 말고 날짜 형태로
+
+@Builder // setter 안 쓰도록
+@prepersist
+
+.builder()
+Setter 안 쓰기 위해사 .builder() 사용
+Post updatedPost = post.toBuilder()
+        .title(dto.title())
+        .content(dto.content())
+        .build();
+Builder 처음 생성 toBuilder 기존 객체 수정(@Builder = true) 필요
+
+spring.security.oauth2.client.registration.google.scope= profile,email
+
+spring.security.oauth2.client.registration.google.scope= openid,profile,email
+
+🌐 Google
+{
+  "sub": "109498598033914109236",
+  "name": "정준영",
+  "email": "jjy1111202@gmail.com",
+  ...
+}
+사용자 ID는 sub에 있음.
+구조가 단순해서 attributes.get("sub")로 바로 접근 가능.
+userNameAttributeName = "sub";
+
+🟡 Kakao
+{
+  "id": 3954085537,
+  "connected_at": "...",
+  "properties": {
+    "nickname": "정준영",
+    "profile_image": "..."
+  },
+  "kakao_account": {
+    "email": "...",
+    "profile": {
+      "nickname": "...",
+      "profile_image_url": "..."
+    }
+  }
+}
+사용자 ID는 최상위 "id"에 있음.
+
+역시 구조가 납작해서 attributes.get("id")로 바로 접근 가능.
+userNameAttributeName = "id";
+
+Naver
+{
+  "resultcode": "00",
+  "message": "success",
+  "response": {
+    "id": "ZNo420wxywD9FNfT-CW8I2XoSGEXDxHfByKQlEReovs",
+    "nickname": "정준영",
+    "email": "jjy1111202@naver.com",
+    ...
+  }
+}
+사용자 ID는 response 안의 "id"에 있음.
+따라서 그냥 attributes.get("id")로는 못 찾음.
+
+해결: attributes = (Map<String, Object>) attributes.get("response") 로 
+response 내부를 꺼내서 바꿔치기.
+
+Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+userNameAttributeName = "id";
+attributes = response;
+
+"id"는 response 내부에 있음 → 즉, 기본 attributes.get("id")는 null 반환
+그래서 attributes = response; 로 교체해야 attributes.get("id") 가 정상 동작함a
